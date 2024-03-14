@@ -6,7 +6,10 @@
 # DEVICE?
 # if DEVICE=CPU: CPU_INCLUDE_PATH?, CPU_LIBRARY_PATH?
 # if DEVICE=GPU: GPU_INCLUDE_PATH?, GPU_LIBRARY_PATH?
-#
+
+GPU_INCLUDE_PATH = /usr/local/cuda/include
+GPU_LIBRARY_PATH = /usr/local/cuda/lib64
+
 # Cuda will be automatically detect and used as the
 # when these conditions are true:
 #      - DEVICE=CUDA *XOR*

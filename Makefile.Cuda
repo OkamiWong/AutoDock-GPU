@@ -15,7 +15,7 @@ NVCC = nvcc
 CPP = g++
 UNAME := $(shell uname)
 
-TARGETS = 52 60 61 70
+TARGETS = 80
 CUDA_TARGETS=$(foreach target,$(TARGETS),-gencode arch=compute_$(target),code=sm_$(target))
 
 ifeq ($(DEVICE), CPU)
@@ -40,8 +40,8 @@ TOOL_TARGET := adgpu_analysis
 
 IFLAGS=-I$(COMMON_DIR) -I$(HOST_INC_DIR) -I$(GPU_INCLUDE_PATH) -I$(KRNL_DIR)
 LFLAGS=-L$(GPU_LIBRARY_PATH) -Wl,-rpath=$(GPU_LIBRARY_PATH):$(CPU_LIBRARY_PATH)
-CFLAGS=-std=c++17 $(IFLAGS) $(LFLAGS)
-TOOL_CFLAGS=-std=c++17 -I$(COMMON_DIR) -I$(HOST_INC_DIR)
+CFLAGS=-std=c++17 $(IFLAGS) $(LFLAGS) -lstdc++fs
+TOOL_CFLAGS=-std=c++17 -I$(COMMON_DIR) -I$(HOST_INC_DIR) -lstdc++fs
 
 ifeq ($(DEVICE), CPU)
 	TARGET:=$(TARGET)_cpu
