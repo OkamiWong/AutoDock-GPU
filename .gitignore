@@ -1,4 +1,8 @@
-# Build artifacts
+# Custom - Dev
+.vscode/
+compile.sh
+
+# Custom - Build artifacts
 host/inc/performdocking.h
 host/src/performdocking.cpp
 test_cuda
