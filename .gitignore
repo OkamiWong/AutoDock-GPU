@@ -1,6 +1,7 @@
 # Custom - Dev
 .vscode/
 compile.sh
+run.sh
 
 # Custom - Build artifacts
 host/inc/performdocking.h
