@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
+#include "preflight.cuh"
 
 //#define DEBUG_ENERGY_KERNEL4
 
@@ -313,7 +314,8 @@ void gpu_gen_and_eval_newpops(
                               float*   pMem_energies_next
                              )
 {
-	gpu_gen_and_eval_newpops_kernel<<<blocks, threadsPerBlock>>>(pMem_conformations_current, pMem_energies_current, pMem_conformations_next, pMem_energies_next);
+  preflight::registerKernel({pMem_conformations_current, pMem_energies_current, pMem_conformations_next, pMem_energies_next, cData.pMem_evals_of_new_entities, cData.pMem_prng_states});
+  gpu_gen_and_eval_newpops_kernel<<<blocks, threadsPerBlock>>>(pMem_conformations_current, pMem_energies_current, pMem_conformations_next, pMem_energies_next);
 	LAUNCHERROR("gpu_gen_and_eval_newpops_kernel");
 #if 0
 	cudaError_t status;

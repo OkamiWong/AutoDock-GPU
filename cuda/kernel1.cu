@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
+#include "preflight.cuh"
 
 __global__ void
 __launch_bounds__(NUM_OF_THREADS_PER_BLOCK, 1024 / NUM_OF_THREADS_PER_BLOCK)
@@ -61,7 +62,8 @@ void gpu_calc_initpop(
                       float*   pEnergies_current
                      )
 {
-	gpu_calc_initpop_kernel<<<blocks, threadsPerBlock>>>(pConformations_current, pEnergies_current);
+  preflight::registerKernel({pConformations_current, pEnergies_current, cData.pMem_evals_of_new_entities});
+  gpu_calc_initpop_kernel<<<blocks, threadsPerBlock>>>(pConformations_current, pEnergies_current);
 	LAUNCHERROR("gpu_calc_initpop_kernel");
 #if 0
 	cudaError_t status;

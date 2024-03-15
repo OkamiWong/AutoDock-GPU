@@ -26,10 +26,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #ifdef USE_PIPELINE
 #include <omp.h>
 #endif
+
 #include <vector>
+
+#include "preflight.hpp"
 
 #include "processgrid.h"
 #include "processligand.h"
@@ -543,6 +547,8 @@ int main(int argc, char* argv[])
 		}
 	}
 	if (n_errors==0) printf("\nAll jobs ran without errors.\n");
+
+	preflight::printResult();
 
 	return 0;
 }

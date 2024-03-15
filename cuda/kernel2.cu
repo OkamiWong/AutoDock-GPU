@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
+#include "preflight.cuh"
 
 __global__ void
 __launch_bounds__(NUM_OF_THREADS_PER_BLOCK, 1024 / NUM_OF_THREADS_PER_BLOCK)
@@ -52,7 +53,8 @@ gpu_sum_evals_kernel()
 
 void gpu_sum_evals(uint32_t blocks, uint32_t threadsPerBlock)
 {
-	gpu_sum_evals_kernel<<<blocks, threadsPerBlock>>>();
+  preflight::registerKernel({cData.pMem_evals_of_new_entities, cData.pMem_gpu_evals_of_runs});
+  gpu_sum_evals_kernel<<<blocks, threadsPerBlock>>>();
 	LAUNCHERROR("gpu_sum_evals_kernel");
 #if 0
 	cudaError_t status;

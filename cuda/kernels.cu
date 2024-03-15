@@ -120,7 +120,7 @@ __device__ inline int64_t ullitolli(uint64_t u)
 
 
 
-static __constant__ GpuData cData;
+static __managed__ GpuData cData;
 static GpuData cpuData;
 
 void SetKernelsGpuData(GpuData* pData)

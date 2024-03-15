@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
+#include "preflight.cuh"
 
 // #define AD_RHO_CRITERION
 
@@ -403,7 +404,8 @@ void gpu_gradient_minAdam(
                           float* pMem_energies_next
 )
 {
-	gpu_gradient_minAdam_kernel<<<blocks, threads>>>(pMem_conformations_next, pMem_energies_next);
+  preflight::registerKernel({pMem_conformations_next, pMem_energies_next, cData.pMem_prng_states, cData.pMem_evals_of_new_entities});
+  gpu_gradient_minAdam_kernel<<<blocks, threads>>>(pMem_conformations_next, pMem_energies_next);
 	LAUNCHERROR("gpu_gradient_minAdam_kernel");
 #if 0
 	cudaError_t status;

@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
+#include "preflight.cuh"
 
 // if defined, new (experimental) SW genotype moves that are dependent
 // on nr of atoms and nr of torsions of ligand are used
@@ -315,7 +316,8 @@ void gpu_perform_LS(
                     float*   pMem_energies_next
                    )
 {
-	gpu_perform_LS_kernel<<<blocks, threads>>>(pMem_conformations_next, pMem_energies_next);
+  preflight::registerKernel({pMem_conformations_next, pMem_energies_next, cData.pMem_prng_states, cData.pMem_evals_of_new_entities});
+  gpu_perform_LS_kernel<<<blocks, threads>>>(pMem_conformations_next, pMem_energies_next);
 	LAUNCHERROR("gpu_perform_LS_kernel");
 #if 0
 	cudaError_t status;
